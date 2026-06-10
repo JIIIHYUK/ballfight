@@ -223,7 +223,7 @@
             id: "kim-gibeom",
             name: "김기범",
             shortName: "기범",
-            maxHp: 800,
+            maxHp: 1200,
             baseAttack: 50,
             speedLabel: "낮음",
             speed: 165,
