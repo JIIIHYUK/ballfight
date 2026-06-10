@@ -201,7 +201,7 @@
                 description: "강인찬은 강력한 타격기를 사용하며 이는 중첩될 수 있습니다. 또한 회피한 후 카운터를 언제나 준비하고 있습니다.",
                 effects: {
                     contactPushSpeed: 700,
-                    masteryGainOnBasic: 1,
+                    masteryGainOnBasic: 2,
                     comboDamage: 7,
                     comboInterval: 0.25,
                     comboDashSpeedMultiplier: 2.8,
