@@ -418,7 +418,7 @@
                     wallCrashSlowDuration: 2,
                     wallCrashSlowMultiplier: 0.45,
                     wallCrashCooldown: 0.75,
-                    earthquakeWallHits: 5,
+                    earthquakeWallHits: 7,
                     earthquakeDamage: 90,
                     earthquakeSlowDuration: 2,
                     earthquakeSlowMultiplier: 0.45
