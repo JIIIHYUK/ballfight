@@ -360,7 +360,7 @@
                     contactPushSpeed: 1000,
                     masteryGainOnBasic: 1,
                     comboDamage: 8,
-                    comboHealPerHit: 2,
+                    comboHealPerHit: 3,
                     comboInterval: 0.15,
                     comboDashSpeedMultiplier: 2.8,
                     comboDamageTakenMultiplier: 0.5,
