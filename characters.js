@@ -181,7 +181,7 @@
                     radius: 300,
                     cinematicLineDuration: 1,
                     domainWraithsPerEnemy: 3,
-                    wraithDeathsPerReplacement: 2,
+                    wraithDeathsPerReplacement: 1,
                     summonSteerCorrection: 0.24,
                     summonSteerJitter: 0.16,
                     domainOpacity: 0.5
