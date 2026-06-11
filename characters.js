@@ -302,7 +302,7 @@
             id: "kim-gibeom",
             name: "김기범",
             shortName: "기범",
-            maxHp: 1080,
+            maxHp: 1500,
             baseAttack: 25,
             speedLabel: "낮음",
             speed: 165,
@@ -319,14 +319,14 @@
                 name: "압도적인 힘",
                 description: "그는 단순하지만 압도적인 힘을 가지고 있습니다",
                 effects: {
-                    maxAttack: 50,
+                    maxAttack: 75,
                     reflectRange: 150,
                     reflectedKnockbackSpeed: 1200,
                     wallCrashSlowDuration: 2,
                     wallCrashSlowMultiplier: 0.45,
                     wallCrashCooldown: 0.75,
                     earthquakeWallHits: 5,
-                    earthquakeDamage: 50,
+                    earthquakeDamage: 100,
                     earthquakeSlowDuration: 2,
                     earthquakeSlowMultiplier: 0.45
                 }
