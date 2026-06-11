@@ -182,7 +182,7 @@
                 effects: {
                     prepareDuration: 2,
                     clonesPerSide: 2,
-                    cloneSpacing: 50,
+                    cloneSpacing: 100,
                     rushDamageBase: 100,
                     rushStaggerDuration: 1,
                     rushLineDuration: 0.72
