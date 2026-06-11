@@ -166,7 +166,7 @@
                     maxWraiths: 5,
                     wraithHp: 100,
                     wraithAttack: 10,
-                    wraithSpeed: 250,
+                    wraithSpeed: 270,
                     wraithSizeMultiplier: 0.5,
                     explosionRadius: 100,
                     explosionDamage: 20
