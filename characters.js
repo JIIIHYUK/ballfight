@@ -193,7 +193,7 @@
                     shotgunPellets: 5,
                     shotgunRange: 200,
                     shotgunSpeed: 2000,
-                    shotgunDamage: 20,
+                    shotgunDamage: 40,
                     shotgunSpreadRadians: 0.72,
                     srAimDuration: 1.5,
                     srDamage: 400,
@@ -338,7 +338,7 @@
                     regenPerCaffeine: 10,
                     maxRegenPerSecond: 70,
                     speedPerCaffeine: 10,
-                    requiredCaffeine: 6,
+                    requiredCaffeine: 5,
                     caffeineShotBonusInterval: 7,
                     caffeineAimReductionPerBonus: 0.3
                 }
@@ -346,7 +346,7 @@
             skill: {
                 name: "농구가 하고 싶어요",
                 cooldown: 1,
-                description: "카페인을 6회 섭취하면 맵 밖으로 이동해 무적 상태로 3점 슛을 사용한 뒤 덩크로 복귀합니다. 3점 슛은 2초 뒤 지름 125 직접 타격 지점에 150, 지름 500 충격파에 50의 피해를 줍니다. 덩크는 가장 가까운 적에게 100 피해를 주고 맵 전체 충격파로 10 피해를 줍니다.",
+                description: "카페인을 5회 섭취하면 맵 밖으로 이동해 무적 상태로 3점 슛을 사용한 뒤 덩크로 복귀합니다. 3점 슛은 2초 뒤 지름 125 직접 타격 지점에 150, 지름 500 충격파에 50의 피해를 줍니다. 덩크는 가장 가까운 적에게 100 피해를 주고 맵 전체 충격파로 10 피해를 줍니다.",
                 effects: {
                     threePointShots: 2,
                     maxThreePointShots: 4,
