@@ -7,8 +7,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>볼 파이트 전투</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="./characters.js?v=20260612-donggyu-photo-defib"></script>
-    <link href="./effects.css?v=20260612-donggyu-photo-defib" rel="stylesheet">
+    <script src="./characters.js?v=20260612-ji-shot-cap-4"></script>
+    <link href="./effects.css?v=20260612-ji-shot-cap-4" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet">
@@ -297,6 +297,112 @@
             box-shadow: 4px 4px 0 #1c1b1b, 0 0 24px rgba(220, 38, 38, 0.9);
         }
 
+        .fighter-ball.is-ji-dunking {
+            z-index: 29;
+            box-shadow: 4px 4px 0 #1c1b1b, 0 0 30px rgba(249, 115, 22, 0.92);
+        }
+
+        .fighter-ball.is-ji-skill-transparent {
+            opacity: 0;
+            filter: none;
+        }
+
+        .ji-caffeine {
+            position: absolute;
+            z-index: 12;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            overflow: hidden;
+            border-radius: 8px;
+            filter: drop-shadow(3px 3px 0 #1c1b1b) drop-shadow(0 0 12px rgba(249, 115, 22, 0.62));
+        }
+
+        .ji-caffeine img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .ji-three-zone,
+        .ji-three-shadow {
+            position: absolute;
+            pointer-events: none;
+            border-radius: 9999px;
+            transform: translate(-50%, -50%);
+        }
+
+        .ji-three-zone.is-shock {
+            z-index: 10;
+            border: 4px dashed rgba(249, 115, 22, 0.7);
+            background: rgba(249, 115, 22, 0.08);
+            box-shadow: inset 0 0 28px rgba(249, 115, 22, 0.2);
+        }
+
+        .ji-three-zone.is-warning {
+            z-index: 11;
+            border: 5px solid rgba(220, 38, 38, 0.9);
+            background: rgba(220, 38, 38, 0.14);
+            box-shadow: 0 0 22px rgba(220, 38, 38, 0.6);
+        }
+
+        .ji-three-shadow {
+            z-index: 12;
+            border: 12px solid rgba(28, 27, 27, 0.48);
+            animation: ji-shadow-tighten 2s linear forwards;
+        }
+
+        @keyframes ji-shadow-tighten {
+            from {
+                width: var(--shadow-start-size, 500px);
+                height: var(--shadow-start-size, 500px);
+                opacity: 0.3;
+            }
+
+            to {
+                width: var(--shadow-end-size, 125px);
+                height: var(--shadow-end-size, 125px);
+                opacity: 0.72;
+            }
+        }
+
+        .ji-basketball,
+        .ji-basketball-ghost {
+            position: absolute;
+            z-index: 28;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            border-radius: 9999px;
+            overflow: hidden;
+            filter: drop-shadow(4px 4px 0 rgba(28, 27, 27, 0.72));
+        }
+
+        .ji-basketball-ghost {
+            z-index: 26;
+            opacity: 0.34;
+            animation: ji-ball-ghost-fade 420ms ease-out forwards;
+        }
+
+        .ji-basketball.is-held {
+            z-index: 30;
+            filter: drop-shadow(3px 3px 0 rgba(28, 27, 27, 0.82)) drop-shadow(0 0 12px rgba(249, 115, 22, 0.72));
+        }
+
+        .ji-basketball img,
+        .ji-basketball-ghost img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        @keyframes ji-ball-ghost-fade {
+            to {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.84);
+            }
+        }
+
         .kim-gibeom-apple {
             position: absolute;
             z-index: 23;
@@ -405,6 +511,27 @@
 
         .fighter-ball.is-kim-donggyu-bleeding {
             box-shadow: 4px 4px 0 #1c1b1b, 0 0 24px rgba(220, 38, 38, 0.9);
+        }
+
+        .kim-junsu-link {
+            position: absolute;
+            z-index: 23;
+            height: 5px;
+            pointer-events: none;
+            transform-origin: 0 50%;
+            border-radius: 9999px;
+            box-shadow: 0 0 14px currentColor;
+            animation: kim-junsu-link-fade 380ms ease-out forwards;
+        }
+
+        @keyframes kim-junsu-link-fade {
+            from {
+                opacity: 0.9;
+            }
+
+            to {
+                opacity: 0;
+            }
         }
 
         .fighter-ball.is-lee-dohyun-fouled {
@@ -1310,7 +1437,7 @@
         }
 
         function isControlLocked(fighter, now) {
-            return isStunned(fighter, now) || isKangFinishing(fighter) || isYuBusy(fighter) || isLeeCharging(fighter) || isLeeDohyunLineDashing(fighter) || isLeeDohyunFouled(fighter) || isLeeDohyunOffsideBusy(fighter) || isKimDonggyuBusy(fighter);
+            return isStunned(fighter, now) || isKangFinishing(fighter) || isYuBusy(fighter) || isLeeCharging(fighter) || isLeeDohyunLineDashing(fighter) || isLeeDohyunFouled(fighter) || isLeeDohyunOffsideBusy(fighter) || isKimDonggyuBusy(fighter) || isJiTaehyeokBusy(fighter);
         }
 
         function avatarContent(definition) {
@@ -1377,6 +1504,7 @@
                 jaeyoonOriginalIsSummon: false,
                 jaeyoonOriginalSummonType: "",
                 jaeyoonOriginalSizeMultiplier: 1,
+                jaeyoonOriginalAttack: null,
                 x: 0,
                 y: 0,
                 vx: 0,
@@ -1462,6 +1590,17 @@
                 kimDonggyuBleedNextEffectAt: 0,
                 kimDonggyuBleedTickDamage: 0,
                 kimDonggyuBleedSourceId: null,
+                jiCaffeineCharges: 0,
+                jiCaffeineConsumed: 0,
+                jiRegenPerSecond: 0,
+                jiNextRegenFloatAt: 0,
+                jiCaffeineElement: null,
+                jiCaffeineX: 0,
+                jiCaffeineY: 0,
+                jiNextCaffeineAt: 0,
+                jiCaffeineAutoConsumeAt: 0,
+                jiSkill: null,
+                jiNextBasketballGhostAt: 0,
                 leeShieldHitsRemaining: 0,
                 leeChargeStartedAt: 0,
                 leeChargeDirection: null,
@@ -1572,6 +1711,7 @@
                 fighter.lastIsStunned = false;
                 fighter.lastIsAsleep = false;
                 fighter.lastIsOffmap = false;
+                fighter.lastIsJiSkillTransparent = false;
                 fighter.lastIsKimSihyeonBuffed = false;
             });
 
@@ -1630,6 +1770,10 @@
                 if (fighter.dead) {
                     statusTextVal = "탈락";
                     statusColor = "#ba1a1a";
+                } else if (isJiTaehyeokBusy(fighter)) {
+                    const phase = fighter.jiSkill?.phase;
+                    statusTextVal = phase === "dunk" ? "덩크" : "농구가 하고 싶어요";
+                    statusColor = fighter.definition.color;
                 } else if (fighter.offMapUntil > now) {
                     statusTextVal = `맵 밖 ${(Math.max(0, fighter.offMapUntil - now) / 1000).toFixed(1)}초`;
                     statusColor = fighter.definition.color;
@@ -1752,6 +1896,14 @@
                         bonusParts.push("제세동 가능");
                     }
                 }
+                if (fighter.definition.id === "ji-taehyeok") {
+                    const effects = jiPassiveEffects(fighter);
+                    bonusParts.push(`카페인 ${fighter.jiCaffeineCharges || 0}/${effects.requiredCaffeine || 4}`);
+                    if (fighter.jiRegenPerSecond > 0) {
+                        bonusParts.push(`회복 ${Math.round(fighter.jiRegenPerSecond)}/s`);
+                    }
+                    bonusParts.push(`최대HP ${fighter.maxHp}`);
+                }
 
                 if (bonusParts.length > 0) {
                     const bonusTextVal = bonusParts.join(" / ");
@@ -1788,10 +1940,16 @@
                     fighter.lastDead = fighter.dead;
                 }
 
-                const offmapState = !fighter.dead && fighter.offMapUntil > now;
+                const offmapState = !fighter.dead && fighter.offMapUntil > now && !isJiTaehyeokBusy(fighter);
                 if (fighter.lastIsOffmap !== offmapState) {
                     fighter.element.classList.toggle("is-offmap", offmapState);
                     fighter.lastIsOffmap = offmapState;
+                }
+
+                const jiSkillTransparentState = !fighter.dead && isJiTaehyeokBusy(fighter);
+                if (fighter.lastIsJiSkillTransparent !== jiSkillTransparentState) {
+                    fighter.element.classList.toggle("is-ji-skill-transparent", jiSkillTransparentState);
+                    fighter.lastIsJiSkillTransparent = jiSkillTransparentState;
                 }
 
                 const rageState = !fighter.dead && fighter.definition.id === "gu-minchan" && fighter.rageStacks > 0;
@@ -2413,6 +2571,10 @@
             target.jaeyoonOriginalIsSummon = false;
             target.jaeyoonOriginalSummonType = "";
             target.jaeyoonOriginalSizeMultiplier = 1;
+            if (target.jaeyoonOriginalAttack !== null && target.jaeyoonOriginalAttack !== undefined) {
+                target.attack = target.jaeyoonOriginalAttack;
+            }
+            target.jaeyoonOriginalAttack = null;
             target.element.classList.remove("is-jaeyoon-revived");
             target.element.style.removeProperty("--jaeyoon-revive-color");
         }
@@ -2489,6 +2651,9 @@
                 fighter.kimDonggyuArShotsRemaining = 0;
                 fighter.kimDonggyuNextArShotAt = 0;
             }
+            if (isJiTaehyeok(fighter)) {
+                clearJiTaehyeokState(fighter);
+            }
             if (isKangInchan(fighter)) {
                 fighter.kangComboTargetId = null;
                 fighter.kangComboCount = 0;
@@ -2511,6 +2676,9 @@
             target.vy = 0;
             target.element.style.zIndex = "1";
             clearFighterActionState(target);
+            if (isLeeDohyun(target)) {
+                clearAllLeeDohyunFouls({ silent: true });
+            }
             clearYuBleed(target);
             clearKimDonggyuBleed(target);
             if (isYuYejun(target)) {
@@ -2600,6 +2768,7 @@
             target.jaeyoonOriginalIsSummon = target.isSummon;
             target.jaeyoonOriginalSummonType = target.summonType;
             target.jaeyoonOriginalSizeMultiplier = target.sizeMultiplier || 1;
+            target.jaeyoonOriginalAttack = target.attack;
             target.isSummon = true;
             target.ownerId = owner.id;
             target.summonType = "jaeyoon-revived";
@@ -2609,6 +2778,9 @@
             target.jaeyoonDomainSummon = true;
             target.dead = false;
             target.hp = target.maxHp;
+            if ((target.definition.baseAttack || 0) <= 0) {
+                target.attack = 15;
+            }
             target.offMapUntil = 0;
             target.invulnerableUntil = 0;
             target.stunnedUntil = 0;
@@ -2981,6 +3153,10 @@
             if (!options.silent && !target.dead) {
                 floatText("해제", target.x, target.y - fighterRadius(target), target.definition.color);
             }
+        }
+
+        function clearAllLeeDohyunFouls(options = {}) {
+            battle.fighters.forEach((fighter) => clearLeeDohyunFoul(fighter, options));
         }
 
         function applyLeeDohyunFoul(source, target, now, lineY) {
@@ -4239,6 +4415,16 @@
                 .sort((a, b) => Math.hypot(b.x - fighter.x, b.y - fighter.y) - Math.hypot(a.x - fighter.x, a.y - fighter.y))[0] || null;
         }
 
+        function isKimDonggyuSrTargetable(target, now) {
+            return Boolean(target && !target.dead && (target.offMapUntil <= now || isJiTaehyeokBusy(target)));
+        }
+
+        function farthestKimDonggyuSrEnemy(fighter, now) {
+            return battle.fighters
+                .filter((target) => target !== fighter && !areAllies(fighter, target) && isKimDonggyuSrTargetable(target, now))
+                .sort((a, b) => Math.hypot(b.x - fighter.x, b.y - fighter.y) - Math.hypot(a.x - fighter.x, a.y - fighter.y))[0] || null;
+        }
+
         function aimDirectionFor(fighter, preferredTarget = null) {
             const target = preferredTarget || nearestEnemy(fighter);
             if (target) {
@@ -4479,7 +4665,7 @@
         }
 
         function startKimDonggyuSrAim(fighter, now) {
-            const target = farthestEnemyFor(fighter);
+            const target = farthestKimDonggyuSrEnemy(fighter, now);
             if (!target) {
                 floatText("대상 없음", fighter.x, fighter.y - fighterRadius(fighter), fighter.definition.color);
                 return false;
@@ -4563,7 +4749,7 @@
             }
             const aim = fighter.kimDonggyuAim;
             const target = getFighterById(aim.targetId);
-            if (!target || target.dead || target.offMapUntil > now) {
+            if (!isKimDonggyuSrTargetable(target, now)) {
                 clearKimDonggyuAim(fighter);
                 return false;
             }
@@ -4689,6 +4875,582 @@
             }
             if (mode === "SR") {
                 return startKimDonggyuSrAim(fighter, now);
+            }
+            return false;
+        }
+
+        function isKimJunsu(fighter) {
+            return Boolean(fighter && fighter.definition.id === "kim-junsu");
+        }
+
+        function kimJunsuPassiveEffects(fighter) {
+            return fighter?.definition.passive?.effects || {};
+        }
+
+        function kimJunsuSkillEffects(fighter) {
+            return fighter?.definition.skill?.effects || {};
+        }
+
+        function farthestEnemyOf(fighter) {
+            return livingEnemiesOf(fighter)
+                .sort((a, b) => Math.hypot(b.x - fighter.x, b.y - fighter.y) - Math.hypot(a.x - fighter.x, a.y - fighter.y))[0] || null;
+        }
+
+        function drawKimJunsuLink(source, target, color, duration = 0.38) {
+            if (!source || !target) {
+                return;
+            }
+
+            const dx = target.x - source.x;
+            const dy = target.y - source.y;
+            const length = Math.hypot(dx, dy);
+            if (length <= 1) {
+                return;
+            }
+
+            const line = document.createElement("div");
+            line.className = "kim-junsu-link";
+            line.style.left = `${source.x}px`;
+            line.style.top = `${source.y}px`;
+            line.style.width = `${length}px`;
+            line.style.color = color;
+            line.style.background = color;
+            line.style.transform = `translate(0, -50%) rotate(${Math.atan2(dy, dx)}rad)`;
+            line.style.animationDuration = `${duration * 1000}ms`;
+            arena.appendChild(line);
+            setTimeout(() => line.remove(), duration * 1000 + 80);
+        }
+
+        function useKimJunsuSkill(fighter, now) {
+            if (!isKimJunsu(fighter) || fighter.dead) {
+                return false;
+            }
+
+            const enemies = livingEnemiesOf(fighter);
+            if (enemies.length === 0) {
+                return false;
+            }
+
+            const effects = kimJunsuSkillEffects(fighter);
+            const nearest = nearestEnemy(fighter);
+            const farthest = farthestEnemyOf(fighter);
+            if (farthest && !farthest.dead) {
+                const heal = effects.heal || 10;
+                const healed = Math.min(heal, farthest.maxHp - farthest.hp);
+                farthest.hp += healed;
+                drawKimJunsuLink(fighter, farthest, "#22c55e", effects.lineDuration || 0.38);
+                floatText(`+${Math.round(heal)}`, farthest.x, farthest.y - fighterRadius(farthest), "#22c55e");
+                effectRing(farthest.x, farthest.y, battle.ballSize * 1.08, "#22c55e");
+            }
+            if (nearest && !nearest.dead) {
+                drawKimJunsuLink(fighter, nearest, "#ec4899", effects.lineDuration || 0.38);
+                applyDamage(nearest, effects.damage || 30, fighter, "skill");
+            }
+            return true;
+        }
+
+        function isHazardMovingTowardFighter(hazard, fighter, range) {
+            if (!hazard || !Number.isFinite(hazard.x) || !Number.isFinite(hazard.y)) {
+                return false;
+            }
+
+            const vx = hazard.vx || 0;
+            const vy = hazard.vy || 0;
+            const speed = Math.hypot(vx, vy);
+            if (speed <= 1) {
+                return false;
+            }
+
+            const toFighterX = fighter.x - hazard.x;
+            const toFighterY = fighter.y - hazard.y;
+            const distance = Math.hypot(toFighterX, toFighterY);
+            if (distance > range || distance <= 1) {
+                return false;
+            }
+
+            return (vx * toFighterX + vy * toFighterY) / (speed * distance) > 0.62;
+        }
+
+        function kimJunsuHazards(fighter) {
+            const hazards = [];
+            battle.activeVolleyballs.forEach((ball) => {
+                if (!ball.source || ball.source.dead || areAllies(ball.source, fighter)) {
+                    return;
+                }
+                hazards.push(ball);
+            });
+            battle.activeKimDonggyuProjectiles.forEach((projectile) => {
+                const source = getFighterById(projectile.sourceId);
+                if (!source || source.dead || areAllies(source, fighter)) {
+                    return;
+                }
+                hazards.push(projectile);
+            });
+            battle.activeKimGibeomApples.forEach((apple) => {
+                const owner = getFighterById(apple.ownerId);
+                if (!owner || owner.dead || areAllies(owner, fighter)) {
+                    return;
+                }
+                hazards.push({
+                    x: apple.x,
+                    y: apple.y,
+                    vx: 0,
+                    vy: scaledSpeed(apple.speed || 0)
+                });
+            });
+            return hazards;
+        }
+
+        function updateKimJunsuDodge(fighter, now) {
+            if (!isKimJunsu(fighter) || fighter.dead || isControlLocked(fighter, now)) {
+                return;
+            }
+
+            const effects = kimJunsuPassiveEffects(fighter);
+            const correction = effects.dangerCorrection ?? 0.023;
+            const range = effects.dangerDetectionRange || 280;
+            let avoidX = 0;
+            let avoidY = 0;
+
+            kimJunsuHazards(fighter).forEach((hazard) => {
+                if (!isHazardMovingTowardFighter(hazard, fighter, range)) {
+                    return;
+                }
+                const away = normalize(fighter.x - hazard.x, fighter.y - hazard.y);
+                avoidX += away.x;
+                avoidY += away.y;
+            });
+
+            if (Math.hypot(avoidX, avoidY) <= 0.01) {
+                return;
+            }
+
+            const current = normalize(fighter.vx || avoidX, fighter.vy || avoidY);
+            const avoid = normalize(avoidX, avoidY);
+            const mixed = normalize(
+                current.x * (1 - correction) + avoid.x * correction,
+                current.y * (1 - correction) + avoid.y * correction
+            );
+            fighter.vx = mixed.x * scaledSpeed(moveSpeedOf(fighter, now));
+            fighter.vy = mixed.y * scaledSpeed(moveSpeedOf(fighter, now));
+        }
+
+        function isJiTaehyeok(fighter) {
+            return Boolean(fighter && fighter.definition.id === "ji-taehyeok");
+        }
+
+        function jiPassiveEffects(fighter) {
+            return fighter?.definition.passive?.effects || {};
+        }
+
+        function jiSkillEffects(fighter) {
+            return fighter?.definition.skill?.effects || {};
+        }
+
+        function isJiTaehyeokBusy(fighter) {
+            return Boolean(isJiTaehyeok(fighter) && fighter.jiSkill);
+        }
+
+        function removeJiCaffeine(fighter) {
+            fighter?.jiCaffeineElement?.remove();
+            if (fighter) {
+                fighter.jiCaffeineElement = null;
+                fighter.jiCaffeineAutoConsumeAt = 0;
+            }
+        }
+
+        function jiBasketballHtml(fighter) {
+            const effects = jiSkillEffects(fighter);
+            return `<img alt="농구공" ${imageAttrs(effects.basketballImageSrc || "images/지태혁/농구공.png", effects.basketballImageFallbackSrcs)}>`;
+        }
+
+        function clearJiSkillVisuals(fighter) {
+            const skill = fighter?.jiSkill;
+            if (!skill) {
+                return;
+            }
+            [skill.warningElement, skill.shockElement, skill.shadowElement, skill.ballElement, skill.heldBallElement].forEach((element) => element?.remove());
+            fighter.jiSkill = null;
+            fighter.jiNextBasketballGhostAt = 0;
+            fighter.element?.classList.remove("is-ji-dunking");
+            fighter.element?.classList.remove("is-ji-skill-transparent");
+        }
+
+        function clearJiTaehyeokState(fighter) {
+            removeJiCaffeine(fighter);
+            clearJiSkillVisuals(fighter);
+            if (isJiTaehyeok(fighter)) {
+                fighter.offMapUntil = 0;
+                fighter.invulnerableUntil = 0;
+            }
+        }
+
+        function spawnJiCaffeine(fighter, now) {
+            if (!isJiTaehyeok(fighter) || fighter.dead || isJiTaehyeokBusy(fighter)) {
+                return;
+            }
+            if (fighter.jiCaffeineElement?.isConnected || (fighter.jiNextCaffeineAt || 0) > now) {
+                return;
+            }
+
+            const effects = jiPassiveEffects(fighter);
+            const size = fighterSize(fighter) * (effects.caffeineSizeMultiplier || 0.8);
+            const spawnRadius = effects.caffeineSpawnRadius || 400;
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.sqrt(Math.random()) * spawnRadius;
+            fighter.jiCaffeineX = Math.max(size / 2, Math.min(battle.arenaSize - size / 2, fighter.x + Math.cos(angle) * distance));
+            fighter.jiCaffeineY = Math.max(size / 2, Math.min(battle.arenaSize - size / 2, fighter.y + Math.sin(angle) * distance));
+            const caffeine = document.createElement("div");
+            caffeine.className = "ji-caffeine";
+            caffeine.style.left = `${fighter.jiCaffeineX}px`;
+            caffeine.style.top = `${fighter.jiCaffeineY}px`;
+            caffeine.style.width = `${size}px`;
+            caffeine.style.height = `${size}px`;
+            caffeine.innerHTML = `<img alt="카페인" ${imageAttrs(effects.caffeineImageSrc || "images/지태혁/카페인.png", effects.caffeineImageFallbackSrcs)}>`;
+            arena.appendChild(caffeine);
+            fighter.jiCaffeineElement = caffeine;
+            fighter.jiNextCaffeineAt = now + (effects.caffeineSpawnInterval || 1) * 1000;
+            fighter.jiCaffeineAutoConsumeAt = now + (effects.caffeineAutoConsumeDelay || 3) * 1000;
+        }
+
+        function steerJiTaehyeokToCaffeine(fighter, now) {
+            if (!fighter.jiCaffeineElement?.isConnected) {
+                return;
+            }
+            const effects = jiPassiveEffects(fighter);
+            const desired = normalize(fighter.jiCaffeineX - fighter.x, fighter.jiCaffeineY - fighter.y);
+            const current = normalize(fighter.vx || desired.x, fighter.vy || desired.y);
+            const steer = Math.max(0, Math.min(0.35, effects.caffeineSteerStrength || 0.045));
+            const mixed = normalize(
+                current.x * (1 - steer) + desired.x * steer,
+                current.y * (1 - steer) + desired.y * steer
+            );
+            fighter.vx = mixed.x * scaledSpeed(moveSpeedOf(fighter, now));
+            fighter.vy = mixed.y * scaledSpeed(moveSpeedOf(fighter, now));
+        }
+
+        function consumeJiCaffeine(fighter, now) {
+            const effects = jiPassiveEffects(fighter);
+            removeJiCaffeine(fighter);
+            fighter.jiCaffeineCharges = (fighter.jiCaffeineCharges || 0) + 1;
+            fighter.jiCaffeineConsumed = (fighter.jiCaffeineConsumed || 0) + 1;
+            fighter.jiRegenPerSecond = Math.min(
+                effects.maxRegenPerSecond || 100,
+                (fighter.jiRegenPerSecond || 0) + (effects.regenPerCaffeine || 10)
+            );
+            fighter.maxHp = Math.max(effects.minMaxHp || 250, fighter.maxHp - (effects.maxHpLoss || 50));
+            fighter.hp = Math.min(fighter.hp, fighter.maxHp);
+            fighter.speed += effects.speedPerCaffeine || 10;
+            setVelocitySpeed(fighter, moveSpeedOf(fighter, now));
+            floatText(`카페인 ${fighter.jiCaffeineCharges}/${effects.requiredCaffeine || 4}`, fighter.x, fighter.y - fighterRadius(fighter), fighter.definition.color);
+            effectRing(fighter.x, fighter.y, battle.ballSize * 1.18, fighter.definition.color);
+        }
+
+        function updateJiRegeneration(fighter, dt, now) {
+            const regen = fighter.jiRegenPerSecond || 0;
+            if (!regen || fighter.hp >= fighter.maxHp) {
+                return;
+            }
+            const healed = Math.min(fighter.maxHp - fighter.hp, regen * dt);
+            fighter.hp += healed;
+            if (healed > 0 && (!fighter.jiNextRegenFloatAt || now >= fighter.jiNextRegenFloatAt)) {
+                floatText(`+${Math.round(regen)}/s`, fighter.x, fighter.y - fighterRadius(fighter), "#16a34a");
+                fighter.jiNextRegenFloatAt = now + 1000;
+            }
+        }
+
+        function jiCaffeineShotBonusStacks(fighter) {
+            const effects = jiPassiveEffects(fighter);
+            const interval = Math.max(1, effects.caffeineShotBonusInterval || 5);
+            return Math.floor((fighter.jiCaffeineConsumed || 0) / interval);
+        }
+
+        function jiThreePointShotCount(fighter) {
+            const effects = jiSkillEffects(fighter);
+            const uncapped = (effects.threePointShots || 2) + jiCaffeineShotBonusStacks(fighter);
+            return Math.min(effects.maxThreePointShots || 4, uncapped);
+        }
+
+        function jiThreePointAimDurationMs(fighter) {
+            const skillEffects = jiSkillEffects(fighter);
+            const passiveEffects = jiPassiveEffects(fighter);
+            const reduction = Math.max(0, Math.min(0.9, passiveEffects.caffeineAimReductionPerBonus || 0.3));
+            const multiplier = Math.pow(1 - reduction, jiCaffeineShotBonusStacks(fighter));
+            return Math.max((skillEffects.ballFlightDuration || 0.5) * 1000, (skillEffects.aimDuration || 2) * multiplier * 1000);
+        }
+
+        function updateJiCaffeinePassive(fighter, dt, now) {
+            if (!isJiTaehyeok(fighter) || fighter.dead) {
+                return;
+            }
+            updateJiRegeneration(fighter, dt, now);
+            if (isJiTaehyeokBusy(fighter) || fighter.offMapUntil > now) {
+                return;
+            }
+            spawnJiCaffeine(fighter, now);
+            if (fighter.jiCaffeineElement?.isConnected) {
+                if ((fighter.jiCaffeineAutoConsumeAt || 0) > 0 && now >= fighter.jiCaffeineAutoConsumeAt) {
+                    consumeJiCaffeine(fighter, now);
+                } else {
+                    steerJiTaehyeokToCaffeine(fighter, now);
+                    const size = fighterSize(fighter) * (jiPassiveEffects(fighter).caffeineSizeMultiplier || 0.8);
+                    if (Math.hypot(fighter.x - fighter.jiCaffeineX, fighter.y - fighter.jiCaffeineY) <= fighterRadius(fighter) + size * 0.5) {
+                        consumeJiCaffeine(fighter, now);
+                    }
+                }
+            }
+            if ((fighter.jiCaffeineCharges || 0) >= (jiPassiveEffects(fighter).requiredCaffeine || 4)) {
+                startJiTaehyeokSkill(fighter, now);
+            }
+        }
+
+        function createJiCircle(className, x, y, diameter) {
+            const element = document.createElement("div");
+            element.className = className;
+            element.style.left = `${x}px`;
+            element.style.top = `${y}px`;
+            element.style.width = `${diameter}px`;
+            element.style.height = `${diameter}px`;
+            arena.appendChild(element);
+            return element;
+        }
+
+        function startJiThreePointShot(fighter, now, shotIndex) {
+            const effects = jiSkillEffects(fighter);
+            const target = nearestEnemy(fighter);
+            const targetX = clampToArena(target?.x ?? battle.arenaSize / 2);
+            const targetY = clampToArena(target?.y ?? battle.arenaSize / 2);
+            const aimMs = jiThreePointAimDurationMs(fighter);
+            const flightMs = Math.max(1, (effects.ballFlightDuration || 0.5) * 1000);
+            const launchMs = Math.max(0, aimMs - flightMs);
+            const shockDiameter = effects.shockwaveDiameter || 500;
+            const warningDiameter = effects.warningDiameter || 125;
+            const shadow = createJiCircle("ji-three-shadow", targetX, targetY, shockDiameter);
+            shadow.style.animationDuration = `${aimMs}ms`;
+            shadow.style.setProperty("--shadow-start-size", `${shockDiameter}px`);
+            shadow.style.setProperty("--shadow-end-size", `${warningDiameter}px`);
+
+            fighter.jiSkill = {
+                phase: "three",
+                shotIndex,
+                targetX,
+                targetY,
+                startX: fighter.x,
+                startY: fighter.y,
+                launchAt: now + launchMs,
+                impactAt: now + aimMs,
+                warningElement: createJiCircle("ji-three-zone is-warning", targetX, targetY, warningDiameter),
+                shockElement: createJiCircle("ji-three-zone is-shock", targetX, targetY, shockDiameter),
+                shadowElement: shadow,
+                ballElement: null
+            };
+            floatText(`3점 슛 ${shotIndex + 1}`, targetX, targetY - warningDiameter * 0.5, fighter.definition.color);
+        }
+
+        function createJiBasketballElement(fighter, size, ghost = false) {
+            const element = document.createElement("div");
+            element.className = ghost ? "ji-basketball-ghost" : "ji-basketball";
+            element.style.width = `${size}px`;
+            element.style.height = `${size}px`;
+            element.innerHTML = jiBasketballHtml(fighter);
+            arena.appendChild(element);
+            return element;
+        }
+
+        function positionJiBall(element, x, y, rotation = 0) {
+            element.style.left = `${x}px`;
+            element.style.top = `${y}px`;
+            element.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+        }
+
+        function impactJiThreePointShot(fighter, now) {
+            const skill = fighter.jiSkill;
+            if (!skill) {
+                return;
+            }
+            const effects = jiSkillEffects(fighter);
+            const warningRadius = (effects.warningDiameter || 125) / 2;
+            const shockRadius = (effects.shockwaveDiameter || 500) / 2;
+            livingEnemiesOf(fighter).forEach((target) => {
+                const distance = Math.hypot(target.x - skill.targetX, target.y - skill.targetY);
+                if (distance <= shockRadius + fighterRadius(target)) {
+                    applyDamage(target, effects.shockwaveDamage || 50, fighter, "skill", { unavoidable: true });
+                }
+                if (!target.dead && distance <= warningRadius + fighterRadius(target)) {
+                    applyDamage(target, effects.warningDamage || 150, fighter, "skill", { unavoidable: true });
+                }
+            });
+            effectRing(skill.targetX, skill.targetY, effects.shockwaveDiameter || 500, fighter.definition.color);
+            burst(skill.targetX, skill.targetY, fighter.definition.color, 8);
+            [skill.warningElement, skill.shockElement, skill.shadowElement, skill.ballElement].forEach((element) => element?.remove());
+
+            const nextShot = skill.shotIndex + 1;
+            if (nextShot < jiThreePointShotCount(fighter)) {
+                fighter.jiSkill = {
+                    phase: "between",
+                    nextAt: now + (effects.delayBetweenShots || 1) * 1000,
+                    shotIndex: nextShot
+                };
+            } else {
+                startJiDunk(fighter, now);
+            }
+        }
+
+        function updateJiThreePointShot(fighter, now) {
+            const skill = fighter.jiSkill;
+            if (!skill || skill.phase !== "three") {
+                return false;
+            }
+            const effects = jiSkillEffects(fighter);
+            if (now >= skill.launchAt && !skill.ballElement) {
+                skill.ballElement = createJiBasketballElement(fighter, effects.ballDiameter || effects.warningDiameter || 125);
+            }
+            if (skill.ballElement) {
+                const flightMs = Math.max(1, (effects.ballFlightDuration || 0.5) * 1000);
+                const progress = Math.max(0, Math.min(1, (now - skill.launchAt) / flightMs));
+                const x = skill.startX + (skill.targetX - skill.startX) * progress;
+                const y = skill.startY + (skill.targetY - skill.startY) * progress;
+                positionJiBall(skill.ballElement, x, y, progress * 540);
+                if (!fighter.jiNextBasketballGhostAt || now >= fighter.jiNextBasketballGhostAt) {
+                    const ghost = createJiBasketballElement(fighter, (effects.ballDiameter || effects.warningDiameter || 125) * 0.72, true);
+                    positionJiBall(ghost, x, y, progress * 540);
+                    setTimeout(() => ghost.remove(), 440);
+                    fighter.jiNextBasketballGhostAt = now + 90;
+                }
+            }
+            if (now >= skill.impactAt) {
+                impactJiThreePointShot(fighter, now);
+            }
+            return true;
+        }
+
+        function startJiDunk(fighter, now) {
+            const effects = jiSkillEffects(fighter);
+            const target = nearestEnemy(fighter);
+            const center = battle.arenaSize / 2;
+            const aimX = target?.x ?? center;
+            const aimY = target?.y ?? center;
+            const outward = normalize(aimX - center || 1, aimY - center || 0);
+            const startDistance = battle.arenaSize * 0.66 + battle.ballSize * 2;
+            fighter.x = center + outward.x * startDistance;
+            fighter.y = center + outward.y * startDistance;
+            fighter.offMapUntil = 0;
+            fighter.invulnerableUntil = now + (effects.dunkMaxDuration || 2) * 1000 + 500;
+            fighter.element.classList.remove("is-offmap");
+            fighter.element.classList.add("is-ji-dunking");
+            const heldBallSize = fighterSize(fighter) * (effects.dunkBallSizeMultiplier || 0.72);
+            const heldBall = createJiBasketballElement(fighter, heldBallSize);
+            heldBall.classList.add("is-held");
+            fighter.jiSkill = {
+                phase: "dunk",
+                targetId: target?.id || null,
+                startedAt: now,
+                expiresAt: now + (effects.dunkMaxDuration || 2) * 1000,
+                nextAfterimageAt: 0,
+                heldBallElement: heldBall
+            };
+            floatText("덩크", clampToArena(aimX), clampToArena(aimY), fighter.definition.color);
+        }
+
+        function finishJiDunk(fighter, target, now) {
+            const effects = jiSkillEffects(fighter);
+            fighter.jiSkill?.heldBallElement?.remove();
+            if (target && !target.dead) {
+                applyDamage(target, effects.dunkDamage || 150, fighter, "skill", { unavoidable: true });
+                impactStar(target.x, target.y, fighter.definition.color);
+            }
+            livingEnemiesOf(fighter).forEach((enemy) => {
+                if (!enemy.dead) {
+                    applyDamage(enemy, effects.dunkShockwaveDamage || 10, fighter, "skill", { unavoidable: true });
+                }
+            });
+            effectRing(clampToArena(fighter.x), clampToArena(fighter.y), battle.arenaSize * 1.4, fighter.definition.color);
+            burst(clampToArena(fighter.x), clampToArena(fighter.y), fighter.definition.color, 8);
+            fighter.x = clampToArena(fighter.x);
+            fighter.y = clampToArena(fighter.y);
+            fighter.offMapUntil = 0;
+            fighter.invulnerableUntil = now + 500;
+            fighter.element.classList.remove("is-ji-dunking");
+            fighter.element.classList.remove("is-ji-skill-transparent");
+            fighter.jiSkill = null;
+            setVelocityDirection(fighter, Math.random() - 0.5, Math.random() - 0.5, fighter.speed);
+        }
+
+        function updateJiDunk(fighter, dt, now) {
+            const skill = fighter.jiSkill;
+            if (!skill || skill.phase !== "dunk") {
+                return false;
+            }
+            const lockedTarget = getFighterById(skill.targetId);
+            const target = lockedTarget && !lockedTarget.dead && lockedTarget.offMapUntil <= now
+                ? lockedTarget
+                : nearestEnemy(fighter);
+            const aimX = target?.x ?? battle.arenaSize / 2;
+            const aimY = target?.y ?? battle.arenaSize / 2;
+            const direction = normalize(aimX - fighter.x, aimY - fighter.y);
+            const speed = scaledSpeed(jiSkillEffects(fighter).dunkSpeed || 1000);
+            fighter.vx = direction.x * speed;
+            fighter.vy = direction.y * speed;
+            fighter.x += fighter.vx * dt;
+            fighter.y += fighter.vy * dt;
+            if (skill.heldBallElement?.isConnected) {
+                const ballOffset = fighterRadius(fighter) * 0.78;
+                positionJiBall(skill.heldBallElement, fighter.x + ballOffset, fighter.y + ballOffset, now * 0.48);
+            }
+            if (!skill.nextAfterimageAt || now >= skill.nextAfterimageAt) {
+                createAfterimage(fighter, { opacity: 0.42, scale: 0.96, lifetime: 440 });
+                skill.nextAfterimageAt = now + 65;
+            }
+            if ((target && Math.hypot(target.x - fighter.x, target.y - fighter.y) <= fighterRadius(fighter) + fighterRadius(target)) || now >= skill.expiresAt) {
+                finishJiDunk(fighter, target, now);
+            }
+            return true;
+        }
+
+        function startJiTaehyeokSkill(fighter, now) {
+            if (!isJiTaehyeok(fighter) || fighter.dead || isJiTaehyeokBusy(fighter)) {
+                return false;
+            }
+            const required = jiPassiveEffects(fighter).requiredCaffeine || 4;
+            if ((fighter.jiCaffeineCharges || 0) < required) {
+                return false;
+            }
+            fighter.jiCaffeineCharges -= required;
+            removeJiCaffeine(fighter);
+            fighter.vx = 0;
+            fighter.vy = 0;
+            fighter.windmillMomentum = null;
+            fighter.offMapUntil = now + 20000;
+            fighter.invulnerableUntil = fighter.offMapUntil;
+            fighter.x = -fighterRadius(fighter) * 0.25;
+            fighter.y = battle.arenaSize * 0.5;
+            startJiThreePointShot(fighter, now, 0);
+            screenFlash(fighter.definition.color);
+            return true;
+        }
+
+        function updateJiTaehyeokState(fighter, dt, now) {
+            if (!isJiTaehyeok(fighter) || fighter.dead) {
+                return false;
+            }
+            updateJiCaffeinePassive(fighter, dt, now);
+            const skill = fighter.jiSkill;
+            if (!skill) {
+                return false;
+            }
+            if (skill.phase === "three") {
+                return updateJiThreePointShot(fighter, now);
+            }
+            if (skill.phase === "between") {
+                fighter.vx = 0;
+                fighter.vy = 0;
+                if (now >= skill.nextAt) {
+                    startJiThreePointShot(fighter, now, skill.shotIndex);
+                }
+                return true;
+            }
+            if (skill.phase === "dunk") {
+                return updateJiDunk(fighter, dt, now);
             }
             return false;
         }
@@ -6432,6 +7194,14 @@
                 skillSucceeded = useKimDonggyuSkill(fighter, now);
             }
 
+            if (id === "kim-junsu") {
+                skillSucceeded = useKimJunsuSkill(fighter, now);
+            }
+
+            if (id === "ji-taehyeok") {
+                skillSucceeded = startJiTaehyeokSkill(fighter, now);
+            }
+
             fighter.skillCooldown = skillSucceeded ? skillCooldownDuration(fighter) : 1;
         }
 
@@ -6525,7 +7295,7 @@
                 for (let second = first + 1; second < battle.fighters.length; second += 1) {
                     const a = battle.fighters[first];
                     const b = battle.fighters[second];
-                    if (a.dead || b.dead || a.offMapUntil > now || b.offMapUntil > now || isLeeDohyunLineDashing(a) || isLeeDohyunLineDashing(b) || isYuAnimalDashing(a) || isYuAnimalDashing(b)) {
+                    if (a.dead || b.dead || a.offMapUntil > now || b.offMapUntil > now || isJiTaehyeokBusy(a) || isJiTaehyeokBusy(b) || isLeeDohyunLineDashing(a) || isLeeDohyunLineDashing(b) || isYuAnimalDashing(a) || isYuAnimalDashing(b)) {
                         continue;
                     }
 
@@ -6636,6 +7406,10 @@
                     updateKimGibeomAttack(fighter);
                 }
 
+                if (updateJiTaehyeokState(fighter, dt, now)) {
+                    return;
+                }
+
                 restoreFromOffMap(fighter, now);
 
                 if (fighter.offMapUntil > now) {
@@ -6716,7 +7490,7 @@
                 if (!fighter.isSummon && !isLeeCharging(fighter) && !isJaeyoonDomainActiveFor(fighter) && !isLeeDohyunFouled(fighter) && !(isYuYejun(fighter) && hasYuAnimalPets(fighter))) {
                     fighter.skillCooldown = Math.max(0, fighter.skillCooldown - dt);
                 }
-                if (!fighter.isSummon && fighter.skillCooldown <= 0 && fighter.definition.id !== "kang-inchan" && !isLeeCharging(fighter) && !fighter.definition.skill?.passiveOnly && !(isYuYejun(fighter) && hasYuAnimalPets(fighter))) {
+                if (!fighter.isSummon && fighter.skillCooldown <= 0 && fighter.definition.id !== "kang-inchan" && fighter.definition.id !== "ji-taehyeok" && !isLeeCharging(fighter) && !fighter.definition.skill?.passiveOnly && !(isYuYejun(fighter) && hasYuAnimalPets(fighter))) {
                     useSkill(fighter, now);
                 }
                 if (isStunned(fighter, now)) {
@@ -6729,6 +7503,8 @@
                     maintainMotion(fighter, now);
                 }
 
+                updateKimJunsuDodge(fighter, now);
+
                 fighter.x += fighter.vx * dt;
                 fighter.y += fighter.vy * dt;
                 handleWallBounce(fighter);
@@ -6737,7 +7513,7 @@
 
             handleCollisions(now);
             battle.fighters.forEach((fighter) => {
-                if (!fighter.dead && fighter.offMapUntil <= now) {
+                if (!fighter.dead && fighter.offMapUntil <= now && !isJiTaehyeokBusy(fighter)) {
                     handleWallBounce(fighter);
                     enforceJaeyoonDomainWall(fighter);
                 }
@@ -6846,7 +7622,7 @@
                 cancelAnimationFrame(animationFrameId);
             }
 
-            arena.querySelectorAll(".fighter-ball, .effect-ring, .effect-burst, .damage-float, .skill-label, .impact-star, .arena-flash, .charge-ghost, .windmill-bar, .volleyball-projectile, .volleyball-afterimage, .gje-helper, .gje-afterimage, .gje-screen-call, .yu-afterimage, .yu-rush-clone, .yu-rush-line, .lee-trajectory, .lee-soccer-ball, .lee-dribble-ghost, .jaeyoon-domain-call, .jaeyoon-domain, .lee-dohyun-offside-line, .kim-gibeom-apple, .kim-donggyu-projectile, .kim-donggyu-targeting, .kim-donggyu-aim-line").forEach((node) => node.remove());
+            arena.querySelectorAll(".fighter-ball, .effect-ring, .effect-burst, .damage-float, .skill-label, .impact-star, .arena-flash, .charge-ghost, .windmill-bar, .volleyball-projectile, .volleyball-afterimage, .gje-helper, .gje-afterimage, .gje-screen-call, .yu-afterimage, .yu-rush-clone, .yu-rush-line, .lee-trajectory, .lee-soccer-ball, .lee-dribble-ghost, .jaeyoon-domain-call, .jaeyoon-domain, .lee-dohyun-offside-line, .kim-gibeom-apple, .kim-donggyu-projectile, .kim-donggyu-targeting, .kim-donggyu-aim-line, .kim-junsu-link, .ji-caffeine, .ji-three-zone, .ji-three-shadow, .ji-basketball, .ji-basketball-ghost").forEach((node) => node.remove());
             battle.fighters = selectedCharacters.map((definition, index) => createFighter(definition, index, selectedCharacters.length));
             battle.pairHits = new Map();
             battle.globalSlowUntil = 0;
