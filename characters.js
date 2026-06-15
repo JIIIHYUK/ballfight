@@ -215,7 +215,7 @@
                 name: "NDY",
                 cooldown: 0,
                 passiveOnly: true,
-                description: "게임 시작 전 1초가 남았을 때 시작 시간을 늦추고 검은 화면에 \"저 자퇴할래요...\"를 출력한 뒤 스스로 이번 게임에서 제거됩니다."
+                description: "NDY입니다"
             },
             cooldownOnBasicHit: 0,
             cooldownOnDamageTaken: 0,
