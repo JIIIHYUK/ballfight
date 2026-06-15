@@ -486,12 +486,12 @@
                 name: "드론 소환",
                 description: "2초마다 자신의 주위를 도는 체력 150의 드론을 소환합니다. 주변 드론이 4개 이상이면 가장 가까운 적에게 드론들을 돌진시켜 폭발시키며, 드론은 1초마다 랜덤으로 통합 너프, 통합 버프, 대미지 중 하나를 사용합니다. 오버클럭 중에는 즉시 드론 6개를 배치하고 60도 간격으로 회전시키며, 자동 드론 생성과 폭격은 멈춥니다.",
                 effects: {
-                    droneInterval: 2,
+                    droneInterval: 1,
                     droneHp: 300,
                     droneOrbitRadius: 41,
                     droneOrbitSlots: 4,
                     droneOrbitSpeed: 1.8,
-                    droneSkillCooldown: 0.7,
+                    droneSkillCooldown: 0.6,
                     droneOverclockSkillCooldown: 0.1,
                     droneOverclockExplosionThreshold: 8,
                     droneOverclockDroneCount: 6,
@@ -511,11 +511,11 @@
                     droneBuffHeal: 100,
                     droneBuffMaxHpGain: 50,
                     droneNerf2Damage: 10,
-                    droneNerf2Duration: 2,
+                    droneNerf2Duration: 4,
                     droneNerf2SlowMultiplier: 0.5,
                     droneDamage: 30,
-                    reviveHp: 500,
-                    reviveDroneCount: 2
+                    reviveHp: 800,
+                    reviveDroneCount: 4
                 }
             },
             skill: {
