@@ -500,7 +500,7 @@
                     droneLaunchThreshold: 4,
                     droneLaunchSpeed: 760,
                     droneExplosionDiameter: 200,
-                    droneExplosionDamage: 50,
+                    droneExplosionDamage: 10,
                     droneSizeMultiplier: 0.7,
                     droneImageSrc: "images/지태혁/드론.png",
                     droneImageFallbackSrcs: [
