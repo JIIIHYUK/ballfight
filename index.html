@@ -1,0 +1,917 @@
+<!-- 볼 선택 화면 -->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>볼 파이트</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@500&amp;family=JetBrains+Mono:wght@700&amp;family=Plus+Jakarta+Sans:wght@700;800&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="./characters.js?v=20260613-team-mode"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#006d36",
+                        "on-secondary-container": "#fffbff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed": "#f0dbff",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#adc6ff",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#e5e2e1",
+                        "on-primary-fixed-variant": "#005227",
+                        "tertiary-container": "#aac4ff",
+                        "surface-container-high": "#eae7e7",
+                        "on-secondary-fixed": "#2c0051",
+                        "surface-bright": "#fcf9f8",
+                        "primary": "#006d36",
+                        "secondary": "#8127cf",
+                        "primary-fixed": "#6dfe9c",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "on-background": "#1c1b1b",
+                        "surface-variant": "#e5e2e1",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "on-primary-fixed": "#00210c",
+                        "on-tertiary-fixed-variant": "#004395",
+                        "tertiary-fixed": "#d8e2ff",
+                        "inverse-primary": "#4de082",
+                        "outline-variant": "#bccabb",
+                        "surface-container-low": "#f6f3f2",
+                        "on-tertiary-fixed": "#001a42",
+                        "background": "#fcf9f8",
+                        "secondary-container": "#9c48ea",
+                        "surface": "#fcf9f8",
+                        "inverse-surface": "#313030",
+                        "primary-fixed-dim": "#4de082",
+                        "surface-dim": "#dcd9d9",
+                        "on-error-container": "#93000a",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#4ade80",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#005e2d",
+                        "surface-container": "#f0eded",
+                        "on-surface": "#1c1b1b",
+                        "outline": "#6d7b6d",
+                        "on-tertiary-container": "#004da8",
+                        "on-surface-variant": "#3d4a3e",
+                        "tertiary": "#005ac2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "bar-height": "32px",
+                        "border-width-thick": "4px",
+                        "arena-margin": "24px",
+                        "border-width-thin": "2px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "headline-md-mobile": ["Plus Jakarta Sans"],
+                        "label-numeric": ["JetBrains Mono"],
+                        "body-base": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-md-mobile": ["20px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "label-numeric": ["14px", { "lineHeight": "1.0", "fontWeight": "700" }],
+                        "body-base": ["16px", { "lineHeight": "1.5", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hard-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+        }
+
+        .hard-shadow-sm {
+            box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+        }
+
+        .brutal-border-thick {
+            border: 4px solid #1c1b1b;
+        }
+
+        .brutal-border-thin {
+            border: 2px solid #1c1b1b;
+        }
+
+        .btn-brutal {
+            transition: all 0.1s ease;
+        }
+
+        .btn-brutal:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+        }
+
+        .ball-avatar {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .ball-card:hover .ball-avatar {
+            transform: scale(1.1);
+        }
+
+        .ball-card.is-selected {
+            outline: 4px solid #4ade80;
+            outline-offset: -8px;
+        }
+
+        .selected-chip {
+            min-width: 148px;
+        }
+
+        .modal-backdrop {
+            background: rgba(28, 27, 27, 0.54);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background text-on-background min-h-screen flex flex-col font-body-base overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+    <button id="admin-account-button" type="button"
+        class="fixed top-4 right-4 z-40 px-3 py-2 bg-surface-container-lowest brutal-border-thin hard-shadow-sm btn-brutal font-label-numeric text-label-numeric flex items-center gap-1">
+        <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+        관리자 계정
+    </button>
+    <button id="synergy-catalog-button" type="button"
+        class="fixed top-16 right-4 z-40 px-3 py-2 bg-surface-container-lowest brutal-border-thin hard-shadow-sm btn-brutal font-label-numeric text-label-numeric flex items-center gap-1">
+        <span class="material-symbols-outlined text-[18px]">menu_book</span>
+        시너지 도감
+    </button>
+    <main
+        class="flex-grow flex flex-col items-center justify-center p-4 md:p-8 w-full max-w-screen-xl mx-auto pb-24 md:pb-8">
+        <div class="w-full max-w-3xl mb-8 text-center pt-8">
+            <h1 class="text-display-lg font-display-lg mb-2">볼 파이트</h1>
+            <p class="text-body-base text-on-surface-variant">아레나에 참여할 볼을 선택하세요.</p>
+            <div class="mt-5 inline-flex bg-surface brutal-border-thin hard-shadow-sm p-1 gap-1">
+                <button id="free-mode-button" type="button"
+                    class="px-4 py-2 font-label-numeric text-label-numeric btn-brutal bg-primary text-on-primary brutal-border-thin">
+                    개인전
+                </button>
+                <button id="team-mode-button" type="button"
+                    class="px-4 py-2 font-label-numeric text-label-numeric btn-brutal bg-surface-container-lowest text-on-surface brutal-border-thin">
+                    팀전
+                </button>
+                <button id="boss-mode-button" type="button"
+                    class="px-4 py-2 font-label-numeric text-label-numeric btn-brutal bg-surface-container-lowest text-on-surface brutal-border-thin">
+                    보스전
+                </button>
+            </div>
+        </div>
+
+        <div class="w-full max-w-4xl bg-surface brutal-border-thick hard-shadow p-6 md:p-10 mb-5 relative">
+            <div id="character-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        </div>
+
+        <div id="conditional-section" class="hidden w-full max-w-4xl bg-surface brutal-border-thick hard-shadow p-6 md:p-10 mb-5 relative">
+            <h2 class="font-headline-md-mobile text-headline-md-mobile mb-5">조건부</h2>
+            <div id="conditional-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        </div>
+
+        <div class="w-full max-w-4xl mb-10">
+            <div class="flex items-center justify-between gap-4 mb-3">
+                <h2 class="font-headline-md-mobile text-headline-md-mobile">추가한 캐릭터</h2>
+                <span id="selected-count"
+                    class="font-label-numeric text-label-numeric text-on-surface-variant">0명</span>
+            </div>
+            <div id="selected-list"
+                class="min-h-20 bg-surface-container-lowest brutal-border-thin hard-shadow-sm p-3 flex gap-3 overflow-x-auto items-center">
+            </div>
+        </div>
+
+        <div class="w-full max-w-4xl flex justify-center">
+            <button id="start-button"
+                class="w-full md:w-auto px-12 py-4 bg-primary text-on-primary font-headline-md text-headline-md brutal-border-thick hard-shadow btn-brutal uppercase tracking-tighter flex items-center justify-center gap-2 hover:bg-surface-tint">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">swords</span>
+                전투 시작
+            </button>
+        </div>
+    </main>
+
+    <div id="info-modal" class="fixed inset-0 hidden items-center justify-center p-4 modal-backdrop z-50">
+        <div class="w-full max-w-md bg-surface brutal-border-thick hard-shadow p-6">
+            <div class="flex items-start justify-between gap-4 mb-4">
+                <div>
+                    <h2 id="modal-name" class="font-headline-md text-headline-md"></h2>
+                    <p id="modal-skill" class="font-label-numeric text-label-numeric text-secondary mt-1"></p>
+                </div>
+                <button id="modal-close"
+                    class="w-9 h-9 bg-surface-container-lowest brutal-border-thin hard-shadow-sm btn-brutal flex items-center justify-center"
+                    title="닫기">
+                    <span class="material-symbols-outlined text-[20px]">close</span>
+                </button>
+            </div>
+            <div id="modal-body" class="space-y-3 text-body-base"></div>
+        </div>
+    </div>
+
+    <div id="admin-login-modal" class="fixed inset-0 hidden items-center justify-center p-4 modal-backdrop z-50">
+        <div class="w-full max-w-sm bg-surface brutal-border-thick hard-shadow p-6">
+            <div class="flex items-start justify-between gap-4 mb-4">
+                <div>
+                    <h2 class="font-headline-md text-headline-md">관리자 계정</h2>
+                </div>
+                <button id="admin-login-close" type="button"
+                    class="w-9 h-9 bg-surface-container-lowest brutal-border-thin hard-shadow-sm btn-brutal flex items-center justify-center"
+                    title="닫기">
+                    <span class="material-symbols-outlined text-[20px]">close</span>
+                </button>
+            </div>
+            <div class="grid gap-3">
+                <input id="admin-password-input" type="password"
+                    class="w-full bg-surface-container-lowest brutal-border-thin font-label-numeric text-label-numeric"
+                    placeholder="암호">
+                <button id="admin-login-submit" type="button"
+                    class="px-4 py-3 bg-primary text-on-primary brutal-border-thin hard-shadow-sm btn-brutal font-label-numeric text-label-numeric">
+                    해금
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="synergy-catalog-modal" class="fixed inset-0 hidden items-center justify-center p-4 modal-backdrop z-50">
+        <div class="w-full max-w-2xl max-h-[82vh] overflow-y-auto bg-surface brutal-border-thick hard-shadow p-6">
+            <div class="flex items-start justify-between gap-4 mb-4">
+                <div>
+                    <h2 class="font-headline-md text-headline-md">시너지 도감</h2>
+                    <p class="font-label-numeric text-label-numeric text-on-surface-variant mt-1">등록된 시너지</p>
+                </div>
+                <button id="synergy-catalog-close" type="button"
+                    class="w-9 h-9 bg-surface-container-lowest brutal-border-thin hard-shadow-sm btn-brutal flex items-center justify-center"
+                    title="닫기">
+                    <span class="material-symbols-outlined text-[20px]">close</span>
+                </button>
+            </div>
+            <div id="synergy-catalog-body" class="grid gap-3"></div>
+        </div>
+    </div>
+
+    <script>
+        const catalogCharacters = window.HannamBalls.getCharacters();
+        const regularCharacters = catalogCharacters.filter((character) => character.selectable !== false);
+        const adminCharacters = catalogCharacters.filter((character) => character.selectable !== false || character.adminSelectable);
+        const CONDITIONAL_CHARACTER_IDS = ["admin-ball", "developer-ji-taehyeok", "admin-kim-donggyu", "protest-leader-gu-minchan"];
+        const SYNERGY_CATALOG = [
+            {
+                name: "관리자",
+                targets: "지태혁, 김동규",
+                condition: "?",
+                effect: "관리자로 각성"
+            }
+        ];
+        const conditionalCharacterIdSet = new Set(CONDITIONAL_CHARACTER_IDS);
+        const regularCharacterIds = new Set(regularCharacters.map((character) => character.id));
+        const adminCharacterIds = new Set(adminCharacters.map((character) => character.id));
+        const storedBattleMode = localStorage.getItem("hannamBallsBattleMode");
+        localStorage.removeItem("hannamBallsAdminUnlocked");
+        let adminAccountUnlocked = sessionStorage.getItem("hannamBallsAdminUnlocked") === "true";
+        let battleMode = ["free", "team", "boss"].includes(storedBattleMode) ? storedBattleMode : "free";
+        let characters = adminAccountUnlocked ? adminCharacters : regularCharacters;
+
+        function activeCharacterIds() {
+            return adminAccountUnlocked ? adminCharacterIds : regularCharacterIds;
+        }
+
+        let selectedIds = JSON.parse(localStorage.getItem("hannamBallsSelection") || "[]")
+            .filter((id) => activeCharacterIds().has(id));
+        const storedTeamSelection = JSON.parse(localStorage.getItem("hannamBallsTeamSelection") || "{}");
+        const teamSelection = {
+            blue: Array.isArray(storedTeamSelection.blue) ? storedTeamSelection.blue.filter((id) => activeCharacterIds().has(id)) : [],
+            red: Array.isArray(storedTeamSelection.red) ? storedTeamSelection.red.filter((id) => activeCharacterIds().has(id)) : []
+        };
+        const storedBossSelection = JSON.parse(localStorage.getItem("hannamBallsBossSelection") || "{}");
+        const bossSelection = {
+            boss: Array.isArray(storedBossSelection.boss) ? storedBossSelection.boss.filter((id) => activeCharacterIds().has(id)).slice(0, 1) : [],
+            normal: Array.isArray(storedBossSelection.normal) ? storedBossSelection.normal.filter((id) => activeCharacterIds().has(id)) : []
+        };
+
+        const grid = document.getElementById("character-grid");
+        const conditionalSection = document.getElementById("conditional-section");
+        const conditionalGrid = document.getElementById("conditional-grid");
+        const selectedList = document.getElementById("selected-list");
+        const selectedCount = document.getElementById("selected-count");
+        const startButton = document.getElementById("start-button");
+        const freeModeButton = document.getElementById("free-mode-button");
+        const teamModeButton = document.getElementById("team-mode-button");
+        const bossModeButton = document.getElementById("boss-mode-button");
+        const adminAccountButton = document.getElementById("admin-account-button");
+        const adminLoginModal = document.getElementById("admin-login-modal");
+        const adminPasswordInput = document.getElementById("admin-password-input");
+        const adminLoginSubmit = document.getElementById("admin-login-submit");
+        const adminLoginClose = document.getElementById("admin-login-close");
+        const synergyCatalogButton = document.getElementById("synergy-catalog-button");
+        const synergyCatalogModal = document.getElementById("synergy-catalog-modal");
+        const synergyCatalogClose = document.getElementById("synergy-catalog-close");
+        const synergyCatalogBody = document.getElementById("synergy-catalog-body");
+        const modal = document.getElementById("info-modal");
+        const modalName = document.getElementById("modal-name");
+        const modalSkill = document.getElementById("modal-skill");
+        const modalBody = document.getElementById("modal-body");
+
+        function saveSelection() {
+            localStorage.setItem("hannamBallsBattleMode", battleMode);
+            localStorage.removeItem("hannamBallsAdminUnlocked");
+            if (adminAccountUnlocked) {
+                sessionStorage.setItem("hannamBallsAdminUnlocked", "true");
+            } else {
+                sessionStorage.removeItem("hannamBallsAdminUnlocked");
+            }
+            localStorage.setItem("hannamBallsSelection", JSON.stringify(selectedIds));
+            localStorage.setItem("hannamBallsTeamSelection", JSON.stringify(teamSelection));
+            localStorage.setItem("hannamBallsBossSelection", JSON.stringify(bossSelection));
+        }
+
+        function syncCharactersForAccount() {
+            characters = adminAccountUnlocked ? adminCharacters : regularCharacters;
+        }
+
+        function pruneSelectionsToActiveCharacters() {
+            const validIds = activeCharacterIds();
+            selectedIds = selectedIds.filter((id) => validIds.has(id));
+            teamSelection.blue = teamSelection.blue.filter((id) => validIds.has(id));
+            teamSelection.red = teamSelection.red.filter((id) => validIds.has(id));
+            bossSelection.boss = bossSelection.boss.filter((id) => validIds.has(id)).slice(0, 1);
+            bossSelection.normal = bossSelection.normal.filter((id) => validIds.has(id));
+        }
+
+        const TEACHER_PASSIVE_NAME = "선생님들";
+
+        function hasTeacherPassive(character) {
+            return character?.passive?.name === TEACHER_PASSIVE_NAME;
+        }
+
+        function isTeacherPassiveId(id) {
+            return hasTeacherPassive(catalogCharacters.find((character) => character.id === id));
+        }
+
+        function teacherPassiveIdsForMode(next = {}) {
+            if (battleMode === "team") {
+                const nextTeam = next.teamSelection || teamSelection;
+                return [...(nextTeam.blue || []), ...(nextTeam.red || [])].filter(isTeacherPassiveId);
+            }
+            if (battleMode === "boss") {
+                const nextBoss = next.bossSelection || bossSelection;
+                return [...(nextBoss.boss || []), ...(nextBoss.normal || [])].filter(isTeacherPassiveId);
+            }
+            return (next.selectedIds || selectedIds).filter(isTeacherPassiveId);
+        }
+
+        function blockTeacherPassiveOverflow(next = {}) {
+            if (teacherPassiveIdsForMode(next).length <= 1) {
+                return false;
+            }
+            alert("패시브 '선생님들'을 가진 캐릭터는 한 명만 추가할 수 있습니다.");
+            return true;
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
+        function imageSources(primary, fallbacks = []) {
+            return [...new Set([primary, ...fallbacks].filter(Boolean))];
+        }
+
+        function imageAttrs(primary, fallbacks = []) {
+            const sources = imageSources(primary, fallbacks);
+            return `src="${escapeHtml(sources[0])}" data-fallback-srcs="${escapeHtml(JSON.stringify(sources.slice(1)))}"`;
+        }
+
+        document.addEventListener("error", (event) => {
+            const image = event.target;
+            if (!(image instanceof HTMLImageElement) || !image.dataset.fallbackSrcs) {
+                return;
+            }
+
+            let sources = [];
+            try {
+                sources = JSON.parse(image.dataset.fallbackSrcs);
+            } catch (error) {
+                sources = [];
+            }
+
+            const nextSource = sources.shift();
+            if (nextSource) {
+                image.dataset.fallbackSrcs = JSON.stringify(sources);
+                image.src = nextSource;
+            } else {
+                image.remove();
+            }
+        }, true);
+
+        function avatarHtml(character, sizeClass) {
+            if (character.avatarSrc) {
+                return `<img alt="${escapeHtml(character.name)} 얼굴" class="w-full h-full object-cover" ${imageAttrs(character.avatarSrc, character.avatarFallbackSrcs)}>`;
+            }
+
+            return `<div class="${sizeClass} rounded-full flex items-center justify-center font-headline-md text-headline-md" style="background:${character.color}; color:${character.textColor};">${escapeHtml(character.avatarText)}</div>`;
+        }
+
+        function passiveHtml(character) {
+            if (!character.passive) {
+                return "";
+            }
+
+            return `
+                <div class="bg-secondary-fixed brutal-border-thin p-2">
+                    <p class="font-label-numeric text-label-numeric text-on-secondary-fixed">패시브: ${escapeHtml(character.passive.name)}</p>
+                    <p class="text-on-surface-variant mt-1">${escapeHtml(character.passive.description)}</p>
+                </div>
+            `;
+        }
+
+        function showInfo(character) {
+            const skillSummary = character.skill.passiveOnly
+                ? `${character.skill.name} / 상시`
+                : `${character.skill.name} / ${character.skill.cooldown}초`;
+            modalName.textContent = character.name;
+            modalName.style.color = character.color;
+            modalSkill.textContent = skillSummary;
+            modalBody.innerHTML = `
+                <div class="grid grid-cols-2 gap-2 font-label-numeric text-label-numeric">
+                    <div class="bg-surface-container-low brutal-border-thin p-2">HP ${character.maxHp}</div>
+                    <div class="bg-surface-container-low brutal-border-thin p-2">ATK ${character.baseAttack}</div>
+                    <div class="bg-surface-container-low brutal-border-thin p-2">SPD ${escapeHtml(character.speedLabel)}</div>
+                    <div class="bg-surface-container-low brutal-border-thin p-2">${escapeHtml(character.colorName)}</div>
+                </div>
+                ${passiveHtml(character)}
+                <p class="text-on-surface-variant">${escapeHtml(character.skill.description)}</p>
+                <p class="font-label-numeric text-label-numeric">특성: ${escapeHtml(character.traits.join(" / "))}</p>
+                ${character.immuneToBasic ? '<p class="font-label-numeric text-label-numeric text-secondary">기본 공격 피해 면역</p>' : ''}
+                ${character.immuneToKnockback ? '<p class="font-label-numeric text-label-numeric text-secondary">밀치기 면역</p>' : ''}
+            `;
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function hideInfo() {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+
+        function addCharacter(id) {
+            if (!activeCharacterIds().has(id)) {
+                return;
+            }
+            const nextSelectedIds = [...selectedIds, id];
+            if (blockTeacherPassiveOverflow({ selectedIds: nextSelectedIds })) {
+                return;
+            }
+            selectedIds.push(id);
+            saveSelection();
+            render();
+        }
+
+        function addTeamCharacter(team, id) {
+            if (!activeCharacterIds().has(id)) {
+                return;
+            }
+            const nextTeamSelection = {
+                blue: [...teamSelection.blue],
+                red: [...teamSelection.red]
+            };
+            nextTeamSelection[team].push(id);
+            if (blockTeacherPassiveOverflow({ teamSelection: nextTeamSelection })) {
+                return;
+            }
+            teamSelection[team].push(id);
+            saveSelection();
+            render();
+        }
+
+        function addBossCharacter(role, id) {
+            if (!activeCharacterIds().has(id)) {
+                return;
+            }
+            const nextBossSelection = {
+                boss: role === "boss" ? [id] : [...bossSelection.boss],
+                normal: role === "normal" ? [...bossSelection.normal, id] : [...bossSelection.normal]
+            };
+            if (blockTeacherPassiveOverflow({ bossSelection: nextBossSelection })) {
+                return;
+            }
+            if (role === "boss") {
+                bossSelection.boss = [id];
+            } else {
+                bossSelection.normal.push(id);
+            }
+            saveSelection();
+            render();
+        }
+
+        function removeSelectionAt(index) {
+            selectedIds.splice(index, 1);
+            saveSelection();
+            render();
+        }
+
+        function removeTeamSelectionAt(team, index) {
+            teamSelection[team].splice(index, 1);
+            saveSelection();
+            render();
+        }
+
+        function removeBossSelectionAt(role, index) {
+            bossSelection[role].splice(index, 1);
+            saveSelection();
+            render();
+        }
+
+        function setBattleMode(mode) {
+            battleMode = ["team", "boss"].includes(mode) ? mode : "free";
+            syncCharactersForAccount();
+            pruneSelectionsToActiveCharacters();
+            saveSelection();
+            render();
+        }
+
+        function characterCardHtml(character) {
+            const freeSelectedCount = selectedIds.filter((id) => id === character.id).length;
+            const blueSelectedCount = teamSelection.blue.filter((id) => id === character.id).length;
+            const redSelectedCount = teamSelection.red.filter((id) => id === character.id).length;
+            const bossSelectedCount = bossSelection.boss.filter((id) => id === character.id).length;
+            const normalSelectedCount = bossSelection.normal.filter((id) => id === character.id).length;
+            const selectedCount = battleMode === "team"
+                ? blueSelectedCount + redSelectedCount
+                : battleMode === "boss"
+                    ? bossSelectedCount + normalSelectedCount
+                    : freeSelectedCount;
+            const selectedBadge = battleMode === "team"
+                ? `B${blueSelectedCount} R${redSelectedCount}`
+                : battleMode === "boss"
+                    ? `${bossSelectedCount ? "보스" : ""}${bossSelectedCount && normalSelectedCount ? " " : ""}${normalSelectedCount ? `일반x${normalSelectedCount}` : ""}`
+                    : `x${selectedCount}`;
+            return `
+                <div class="ball-card ${selectedCount > 0 ? "is-selected" : ""} flex flex-col items-center bg-surface-container-lowest brutal-border-thin hard-shadow-sm p-4 relative overflow-hidden group cursor-pointer"
+                    data-id="${character.id}">
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity" style="background:${character.color};"></div>
+                    ${selectedCount > 0 ? `<div class="absolute top-2 right-2 z-20 bg-primary text-on-primary brutal-border-thin hard-shadow-sm font-label-numeric text-label-numeric px-2 py-1">${selectedBadge}</div>` : ""}
+                    <div class="w-24 h-24 rounded-full border-[3px] mb-4 ball-avatar bg-surface-container-highest overflow-hidden flex items-center justify-center relative z-10"
+                        style="border-color:${character.color};">
+                        ${avatarHtml(character, "w-16 h-16")}
+                    </div>
+                    <div class="flex items-center gap-1 justify-center mb-1 relative z-10">
+                        <h3 class="text-label-numeric font-label-numeric">${escapeHtml(character.name)}</h3>
+                        <button type="button" class="info-button flex items-center hover:text-primary" data-info-id="${character.id}" title="정보 보기">
+                            <span class="material-symbols-outlined text-[16px]">info</span>
+                        </button>
+                    </div>
+                    <p class="text-xs font-body-base text-on-surface-variant mb-4 text-center relative z-10">HP: ${character.maxHp} / ATK: ${character.baseAttack}</p>
+                    ${battleMode === "team" ? `
+                        <div class="grid grid-cols-2 gap-2 w-full relative z-10">
+                            <button type="button" data-add-team="blue"
+                                class="team-add-button py-2 bg-[#4169e1] text-white font-label-numeric text-label-numeric brutal-border-thin hard-shadow-sm btn-brutal">
+                                블루팀
+                            </button>
+                            <button type="button" data-add-team="red"
+                                class="team-add-button py-2 bg-[#ef4444] text-white font-label-numeric text-label-numeric brutal-border-thin hard-shadow-sm btn-brutal">
+                                레드팀
+                            </button>
+                        </div>
+                    ` : battleMode === "boss" ? `
+                        <div class="grid grid-cols-2 gap-2 w-full relative z-10">
+                            <button type="button" data-add-boss-role="boss"
+                                class="boss-add-button py-2 bg-[#7f1d1d] text-white font-label-numeric text-label-numeric brutal-border-thin hard-shadow-sm btn-brutal">
+                                보스
+                            </button>
+                            <button type="button" data-add-boss-role="normal"
+                                class="boss-add-button py-2 bg-primary text-on-primary font-label-numeric text-label-numeric brutal-border-thin hard-shadow-sm btn-brutal">
+                                일반
+                            </button>
+                        </div>
+                    ` : `
+                        <button type="button"
+                            class="add-button w-full py-2 bg-primary text-on-primary font-label-numeric text-label-numeric brutal-border-thin hard-shadow-sm btn-brutal uppercase tracking-wider relative z-10">
+                            추가
+                        </button>
+                    `}
+                </div>
+            `;
+        }
+
+        function bindCardActions(root) {
+            root.querySelectorAll(".ball-card").forEach((card) => {
+                card.addEventListener("click", () => {
+                    if (battleMode === "free") {
+                        addCharacter(card.dataset.id);
+                    }
+                });
+            });
+
+            root.querySelectorAll(".team-add-button").forEach((button) => {
+                button.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    addTeamCharacter(button.dataset.addTeam, button.closest(".ball-card").dataset.id);
+                });
+            });
+
+            root.querySelectorAll(".boss-add-button").forEach((button) => {
+                button.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    addBossCharacter(button.dataset.addBossRole, button.closest(".ball-card").dataset.id);
+                });
+            });
+
+            root.querySelectorAll(".info-button").forEach((button) => {
+                button.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    showInfo(characters.find((character) => character.id === button.dataset.infoId));
+                });
+            });
+        }
+
+        function renderCards() {
+            const mainCharacters = characters.filter((character) => !conditionalCharacterIdSet.has(character.id));
+            const conditionalCharacters = adminAccountUnlocked
+                ? CONDITIONAL_CHARACTER_IDS.map((id) => characters.find((character) => character.id === id)).filter(Boolean)
+                : [];
+
+            grid.innerHTML = mainCharacters.map(characterCardHtml).join("");
+            conditionalGrid.innerHTML = conditionalCharacters.map(characterCardHtml).join("");
+            conditionalSection.classList.toggle("hidden", conditionalCharacters.length === 0);
+
+            bindCardActions(grid);
+            bindCardActions(conditionalGrid);
+        }
+
+        function selectedChipHtml(character, attributes, teamColor = character.color) {
+            return `
+                <button type="button" class="selected-chip flex items-center gap-3 bg-surface brutal-border-thin hard-shadow-sm btn-brutal p-2 shrink-0"
+                    ${attributes} title="클릭하면 제거">
+                    <span class="w-10 h-10 rounded-full border-[3px] overflow-hidden flex items-center justify-center shrink-0"
+                        style="border-color:${teamColor};">
+                        ${avatarHtml(character, "w-7 h-7 text-xs")}
+                    </span>
+                    <span class="font-label-numeric text-label-numeric text-left">${escapeHtml(character.name)}</span>
+                </button>
+            `;
+        }
+
+        function teamListHtml(team, label, color) {
+            if (teamSelection[team].length === 0) {
+                return `<p class="text-on-surface-variant text-sm">팀에 캐릭터를 추가하세요.</p>`;
+            }
+            return teamSelection[team].map((id, index) => {
+                const character = characters.find((item) => item.id === id);
+                return selectedChipHtml(character, `data-remove-team="${team}" data-remove-index="${index}"`, color);
+            }).join("");
+        }
+
+        function bossListHtml(role, color) {
+            if (bossSelection[role].length === 0) {
+                return `<p class="text-on-surface-variant text-sm">${role === "boss" ? "보스를 1명 선택하세요." : "일반 캐릭터를 추가하세요."}</p>`;
+            }
+            return bossSelection[role].map((id, index) => {
+                const character = characters.find((item) => item.id === id);
+                return selectedChipHtml(character, `data-remove-boss-role="${role}" data-remove-index="${index}"`, color);
+            }).join("");
+        }
+
+        function renderSelected() {
+            if (battleMode === "team") {
+                selectedCount.textContent = `블루 ${teamSelection.blue.length} / 레드 ${teamSelection.red.length}`;
+                selectedList.className = "min-h-20 bg-surface-container-lowest brutal-border-thin hard-shadow-sm p-3 grid grid-cols-1 md:grid-cols-2 gap-3";
+                selectedList.innerHTML = `
+                    <div class="brutal-border-thin bg-surface p-3">
+                        <div class="font-label-numeric text-label-numeric mb-2 text-[#4169e1]">블루 팀</div>
+                        <div class="flex gap-2 overflow-x-auto items-center">${teamListHtml("blue", "블루 팀", "#4169e1")}</div>
+                    </div>
+                    <div class="brutal-border-thin bg-surface p-3">
+                        <div class="font-label-numeric text-label-numeric mb-2 text-[#ef4444]">레드 팀</div>
+                        <div class="flex gap-2 overflow-x-auto items-center">${teamListHtml("red", "레드 팀", "#ef4444")}</div>
+                    </div>
+                `;
+                selectedList.querySelectorAll("[data-remove-team]").forEach((chip) => {
+                    chip.addEventListener("click", () => removeTeamSelectionAt(chip.dataset.removeTeam, Number(chip.dataset.removeIndex)));
+                });
+                return;
+            }
+
+            if (battleMode === "boss") {
+                selectedCount.textContent = `보스 ${bossSelection.boss.length}/1 / 일반 ${bossSelection.normal.length}`;
+                selectedList.className = "min-h-20 bg-surface-container-lowest brutal-border-thin hard-shadow-sm p-3 grid grid-cols-1 md:grid-cols-2 gap-3";
+                selectedList.innerHTML = `
+                    <div class="brutal-border-thin bg-surface p-3">
+                        <div class="font-label-numeric text-label-numeric mb-2 text-[#7f1d1d]">보스</div>
+                        <div class="flex gap-2 overflow-x-auto items-center">${bossListHtml("boss", "#7f1d1d")}</div>
+                    </div>
+                    <div class="brutal-border-thin bg-surface p-3">
+                        <div class="font-label-numeric text-label-numeric mb-2 text-primary">일반</div>
+                        <div class="flex gap-2 overflow-x-auto items-center">${bossListHtml("normal", "#006d36")}</div>
+                    </div>
+                `;
+                selectedList.querySelectorAll("[data-remove-boss-role]").forEach((chip) => {
+                    chip.addEventListener("click", () => removeBossSelectionAt(chip.dataset.removeBossRole, Number(chip.dataset.removeIndex)));
+                });
+                return;
+            }
+
+            selectedCount.textContent = adminAccountUnlocked ? `관리자 ${selectedIds.length}명` : `${selectedIds.length}명`;
+            selectedList.className = "min-h-20 bg-surface-container-lowest brutal-border-thin hard-shadow-sm p-3 flex gap-3 overflow-x-auto items-center";
+            if (selectedIds.length === 0) {
+                selectedList.innerHTML = `<p class="text-on-surface-variant">${adminAccountUnlocked ? "관리자 캐릭터를 포함해 추가할 수 있습니다." : "캐릭터 카드를 클릭해서 추가하세요."}</p>`;
+                return;
+            }
+
+            selectedList.innerHTML = selectedIds.map((id, index) => {
+                const character = characters.find((item) => item.id === id);
+                return selectedChipHtml(character, `data-remove-index="${index}"`);
+            }).join("");
+
+            selectedList.querySelectorAll("[data-remove-index]").forEach((chip) => {
+                chip.addEventListener("click", () => removeSelectionAt(Number(chip.dataset.removeIndex)));
+            });
+        }
+
+        function render() {
+            freeModeButton.className = `px-4 py-2 font-label-numeric text-label-numeric btn-brutal brutal-border-thin ${battleMode === "free" ? "bg-primary text-on-primary" : "bg-surface-container-lowest text-on-surface"}`;
+            teamModeButton.className = `px-4 py-2 font-label-numeric text-label-numeric btn-brutal brutal-border-thin ${battleMode === "team" ? "bg-primary text-on-primary" : "bg-surface-container-lowest text-on-surface"}`;
+            bossModeButton.className = `px-4 py-2 font-label-numeric text-label-numeric btn-brutal brutal-border-thin ${battleMode === "boss" ? "bg-primary text-on-primary" : "bg-surface-container-lowest text-on-surface"}`;
+            adminAccountButton.className = `fixed top-4 right-4 z-40 px-3 py-2 brutal-border-thin hard-shadow-sm btn-brutal font-label-numeric text-label-numeric flex items-center gap-1 ${adminAccountUnlocked ? "bg-secondary text-on-secondary" : "bg-surface-container-lowest text-on-surface"}`;
+            adminAccountButton.innerHTML = `
+                <span class="material-symbols-outlined text-[18px]">${adminAccountUnlocked ? "person" : "admin_panel_settings"}</span>
+                ${adminAccountUnlocked ? "일반 계정" : "관리자 계정"}
+            `;
+            renderCards();
+            renderSelected();
+        }
+
+        freeModeButton.addEventListener("click", () => setBattleMode("free"));
+        teamModeButton.addEventListener("click", () => setBattleMode("team"));
+        bossModeButton.addEventListener("click", () => setBattleMode("boss"));
+
+        startButton.addEventListener("click", () => {
+            if (battleMode === "team") {
+                if (teamSelection.blue.length < 1 || teamSelection.red.length < 1) {
+                    alert("팀전은 블루 팀과 레드 팀에 각각 최소 1명씩 추가해야 시작할 수 있습니다.");
+                    return;
+                }
+                saveSelection();
+                window.location.href = "./game.html";
+                return;
+            }
+
+            if (battleMode === "boss") {
+                if (bossSelection.boss.length !== 1 || bossSelection.normal.length < 1) {
+                    alert("보스전은 보스 1명과 일반 캐릭터 최소 1명이 필요합니다.");
+                    return;
+                }
+                saveSelection();
+                window.location.href = "./game.html";
+                return;
+            }
+
+            if (selectedIds.length < 2) {
+                alert("최소 2명의 캐릭터를 추가해야 전투를 시작할 수 있습니다.");
+                return;
+            }
+
+            saveSelection();
+            window.location.href = "./game.html";
+        });
+
+        document.getElementById("modal-close").addEventListener("click", hideInfo);
+
+        function returnToRegularAccount() {
+            adminAccountUnlocked = false;
+            sessionStorage.removeItem("hannamBallsAdminUnlocked");
+            localStorage.removeItem("hannamBallsAdminUnlocked");
+            syncCharactersForAccount();
+            pruneSelectionsToActiveCharacters();
+            saveSelection();
+            render();
+        }
+
+        function showAdminLogin() {
+            if (adminAccountUnlocked) {
+                returnToRegularAccount();
+                return;
+            }
+            adminPasswordInput.value = "";
+            adminLoginModal.classList.remove("hidden");
+            adminLoginModal.classList.add("flex");
+            setTimeout(() => adminPasswordInput.focus(), 0);
+        }
+
+        function hideAdminLogin() {
+            adminLoginModal.classList.add("hidden");
+            adminLoginModal.classList.remove("flex");
+        }
+
+        function renderSynergyCatalog() {
+            synergyCatalogBody.innerHTML = SYNERGY_CATALOG.map((synergy) => `
+                <article class="bg-surface-container-lowest brutal-border-thin hard-shadow-sm p-4">
+                    <h3 class="font-headline-md-mobile text-headline-md-mobile mb-3">${escapeHtml(synergy.name)}</h3>
+                    <div class="grid gap-2 font-label-numeric text-label-numeric">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                            <span class="text-on-surface-variant min-w-24">시너지 이름</span>
+                            <span>${escapeHtml(synergy.name)}</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                            <span class="text-on-surface-variant min-w-24">시너지 대상</span>
+                            <span>${escapeHtml(synergy.targets)}</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                            <span class="text-on-surface-variant min-w-24">시너지 조건</span>
+                            <span>${escapeHtml(synergy.condition)}</span>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                            <span class="text-on-surface-variant min-w-24">시너지 효과</span>
+                            <span>${escapeHtml(synergy.effect)}</span>
+                        </div>
+                    </div>
+                </article>
+            `).join("");
+        }
+
+        function showSynergyCatalog() {
+            renderSynergyCatalog();
+            synergyCatalogModal.classList.remove("hidden");
+            synergyCatalogModal.classList.add("flex");
+        }
+
+        function hideSynergyCatalog() {
+            synergyCatalogModal.classList.add("hidden");
+            synergyCatalogModal.classList.remove("flex");
+        }
+
+        function submitAdminLogin() {
+            if (adminPasswordInput.value !== "090509BF") {
+                alert("암호가 틀렸습니다.");
+                return;
+            }
+            hideAdminLogin();
+            adminAccountUnlocked = true;
+            syncCharactersForAccount();
+            pruneSelectionsToActiveCharacters();
+            saveSelection();
+            render();
+        }
+
+        adminAccountButton.addEventListener("click", showAdminLogin);
+        synergyCatalogButton.addEventListener("click", showSynergyCatalog);
+        adminLoginClose.addEventListener("click", hideAdminLogin);
+        adminLoginSubmit.addEventListener("click", submitAdminLogin);
+        synergyCatalogClose.addEventListener("click", hideSynergyCatalog);
+        adminPasswordInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                submitAdminLogin();
+            }
+        });
+        adminLoginModal.addEventListener("click", (event) => {
+            if (event.target === adminLoginModal) {
+                hideAdminLogin();
+            }
+        });
+        synergyCatalogModal.addEventListener("click", (event) => {
+            if (event.target === synergyCatalogModal) {
+                hideSynergyCatalog();
+            }
+        });
+        modal.addEventListener("click", (event) => {
+            if (event.target === modal) {
+                hideInfo();
+            }
+        });
+        window.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                hideInfo();
+                hideAdminLogin();
+                hideSynergyCatalog();
+            }
+        });
+
+        render();
+    </script>
+</body>
+
+</html>
